@@ -57,7 +57,7 @@ public class CountryService {
 		return saveInformation(currency);
 	}
 
-	@Transactional(readOnly = true, isolation = Isolation.DEFAULT)
+	@Transactional(isolation = Isolation.DEFAULT)
 	public void delete(Long id) throws InterruptedException {
 		CountryDTO response = null;
 		Optional<Country> country = countryRepository.findById(id);

@@ -6,6 +6,7 @@ import com.apress.catalog.repository.CurrencyRepository;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -42,6 +43,7 @@ public class CurrrencyService {
 		return saveInformation(currency);
 	}
 
+	@Transactional
 	public CurrencyDTO update(CurrencyDTO currency) {
 		return saveInformation(currency);
 	}
