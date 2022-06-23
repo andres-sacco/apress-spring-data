@@ -10,5 +10,5 @@ import java.util.List;
 public interface StateRepository extends CrudRepository<State, Long> {
 	List<State> findByCode(String code);
 
-	List<State> findAllByCountry(Long id);
+	List<State> findAllByCountryId(Long id);
 }

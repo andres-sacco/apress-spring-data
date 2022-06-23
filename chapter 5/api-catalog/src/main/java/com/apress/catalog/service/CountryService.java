@@ -61,7 +61,7 @@ public class CountryService {
 	public void delete(Long id) throws InterruptedException {
 		CountryDTO response = null;
 		Optional<Country> country = countryRepository.findById(id);
-		List<State> states = stateRepository.findAllByCountry(country.get().getId());
+		List<State> states = stateRepository.findAllByCountryId(country.get().getId());
 
 		if(country.isPresent()) {
 			country.get().setEnabled(Boolean.FALSE);
