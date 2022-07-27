@@ -1,0 +1,5 @@
+<testsuite name="app.currency.CurrencySimulation" tests="1" errors="0" failures="0" time="0">
+<testcase name="GET /api/catalog/currency/1: 95th percentile of response time is less than or equal to 3000.0" status="true" time="0">
+  <system-out>GET /api/catalog/currency/1: 95th percentile of response time is less than or equal to 3000.0</system-out>
+</testcase>
+</testsuite>

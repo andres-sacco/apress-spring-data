@@ -1,0 +1,10 @@
+{
+  "simulation": "app.currency.CurrencySimulation",
+  "simulationId": "currencysimulation",
+  "start": 1658947046081,
+  "description": "",
+  "scenarios": ["Get all the information about one currency"],
+  "assertions": [
+
+  ]
+}

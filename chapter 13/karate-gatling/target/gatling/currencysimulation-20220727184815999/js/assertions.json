@@ -1,0 +1,18 @@
+{
+  "simulation": "app.currency.CurrencySimulation",
+  "simulationId": "currencysimulation",
+  "start": 1658947695999,
+  "description": "",
+  "scenarios": ["Get all the information about one currency"],
+  "assertions": [
+{
+  "path": "GET http://127.0.0.1:8090/api/catalog/currency/1",
+  "target": "95th percentile of response time",
+  "condition": "is less than or equal to",
+  "expectedValues": [3.0],
+  "result": false,
+  "message": "Could not find stats matching assertion path List(GET http://127.0.0.1:8090/api/catalog/currency/1)",
+  "actualValue": [-1.0]
+}
+  ]
+}
