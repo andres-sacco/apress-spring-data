@@ -2,11 +2,11 @@ version: "2.1"
 
 services:
   cassandra-1:
-    image: cassandra:3.11.1
+    image: cassandra:4.0.5
     container_name: cassandra-1
     environment:
       CASSANDRA_CLUSTER_NAME: twa
-      CASSANDRA_DC: TDC1
+      CASSANDRA_DC: datacenter1
       MAX_HEAP_SIZE: 600M
       HEAP_NEWSIZE: 100M
     ports:
@@ -17,11 +17,11 @@ services:
         ipv4_address: 10.0.75.11
 
   cassandra-2:
-    image: cassandra:3.11.1  
+    image: cassandra:4.0.5
     container_name: cassandra-2
     environment:
       CASSANDRA_CLUSTER_NAME: twa
-      CASSANDRA_DC: TDC1
+      CASSANDRA_DC: datacenter1
       CASSANDRA_SEEDS: 10.0.75.11
       MAX_HEAP_SIZE: 600M
       HEAP_NEWSIZE: 100M
@@ -35,11 +35,11 @@ services:
         ipv4_address: 10.0.75.12
 
   cassandra-3:
-    image: cassandra:3.11.1
+    image: cassandra:4.0.5
     container_name: cassandra-3
     environment:
       CASSANDRA_CLUSTER_NAME: twa
-      CASSANDRA_DC: TDC1
+      CASSANDRA_DC: datacenter1
       CASSANDRA_SEEDS: 10.0.75.11
       MAX_HEAP_SIZE: 600M
       HEAP_NEWSIZE: 100M
