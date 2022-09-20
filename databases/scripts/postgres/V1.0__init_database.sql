@@ -41,3 +41,5 @@ CREATE INDEX idx_currency_code ON currency(code);
 CREATE INDEX idx_country_code ON country(code);
 CREATE INDEX idx_state_code ON state(code);
 CREATE INDEX idx_city_name ON city(name);
+
+CREATE SEQUENCE hibernate_sequence START 1 INCREMENT 1;

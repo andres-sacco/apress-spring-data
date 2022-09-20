@@ -15,6 +15,7 @@ public class App {
 
     public static void main(String[] args) {
         // Open a connection and close it when finish the execution
+        // The use of try/catch in this way autoclose the resources
         try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(QUERY);) {

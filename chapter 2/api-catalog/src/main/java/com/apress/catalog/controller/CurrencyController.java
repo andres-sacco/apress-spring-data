@@ -13,40 +13,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apress.catalog.dto.CurrencyDTO;
-import com.apress.catalog.service.CurrrencyService;
+import com.apress.catalog.service.CurrencyService;
 
 @RestController
 @RequestMapping("/currency")
 public class CurrencyController {
 
-    private CurrrencyService currrencyService;
+    private CurrencyService currencyService;
 
     @Autowired
-    public CurrencyController(CurrrencyService currrencyService) {
-        this.currrencyService = currrencyService;
+    public CurrencyController(CurrencyService currencyService) {
+        this.currencyService = currencyService;
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<CurrencyDTO> getById(@PathVariable Long id) {
-        CurrencyDTO response = currrencyService.getById(id);
+        CurrencyDTO response = currencyService.getById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     @PostMapping
     public ResponseEntity<CurrencyDTO> save(@RequestBody CurrencyDTO currencyDTO) {
-        CurrencyDTO response = currrencyService.save(currencyDTO);
+        CurrencyDTO response = currencyService.save(currencyDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     
     @PutMapping(value = "/{id}")
     public ResponseEntity<CurrencyDTO> update(@RequestBody CurrencyDTO currencyDTO) {
-        CurrencyDTO response = currrencyService.update(currencyDTO);
+        CurrencyDTO response = currencyService.update(currencyDTO);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        currrencyService.delete(id);
-        return ResponseEntity.ok().build();
+        currencyService.delete(id);
+        return ResponseEntity.accepted().build();
     }
 }

@@ -1,6 +1,8 @@
 package com.apress.catalog.dto;
 
-public class StateDTO {
+import java.io.Serializable;
+
+public class StateDTO implements Serializable {
 	private Long id;
 
 	private String code;

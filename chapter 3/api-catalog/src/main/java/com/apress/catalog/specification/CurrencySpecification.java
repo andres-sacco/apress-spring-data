@@ -1,16 +1,14 @@
 package com.apress.catalog.specification;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
+import com.apress.catalog.model.Currency;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.apress.catalog.model.Currency;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CurrencySpecification implements Specification<Currency> {
 	
@@ -21,23 +19,22 @@ public class CurrencySpecification implements Specification<Currency> {
     public CurrencySpecification(Currency entity) {
         this.entity = entity;
     }
-	
+
 	@Override
-	public Predicate toPredicate(Root<Currency> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-		
-        //create a new predicate list
-        List<Predicate> predicates = new ArrayList<>();
-		
-	    CriteriaQuery<Currency> cq = builder.createQuery(Currency.class);
+	public Predicate toPredicate(Root<Currency> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+		//create a new predicate list
+		List<Predicate> predicates = new ArrayList<>();
 
-	    // You need to define the main entity
-	    Root<Currency> currency = cq.from(Currency.class); 
+		CriteriaQuery<Currency> cq = criteriaBuilder.createQuery(Currency.class);
 
-	    // Define all the conditions of the query
-	    Predicate codePredicate = builder.equal(currency.get("code"), entity.getCode());
-	    
-	    predicates.add(codePredicate);
+		// You need to define the main entity
+		Root<Currency> currency = cq.from(Currency.class);
 
-	    return builder.and(predicates.toArray(new Predicate[0]));
+		// Define all the conditions of the query
+		Predicate codePredicate = criteriaBuilder.equal(currency.get("code"), entity.getCode());
+
+		predicates.add(codePredicate);
+
+		return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
 	}
 }

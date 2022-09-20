@@ -6,12 +6,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.Objects;
 
-@Entity
+@Entity //Required
 @Table(name = "currency") //Optional only if you need to indicate the name
-public class Currency {
+public class Currency implements Serializable {
 	
-	@Id //Identify which is the primary key
+	@Id //Required - Identify which is the primary key
 	@GeneratedValue(strategy = GenerationType.SEQUENCE) //Indicate the way to generate the ID
 	private Long id;
 	
@@ -28,6 +30,10 @@ public class Currency {
 		this.description = description;
 		this.enable = enable;
 		this.decimalPlaces = decimalPlaces;
+	}
+
+	public Currency() {
+
 	}
 
 	public Long getId() {
@@ -69,5 +75,18 @@ public class Currency {
 	public void setDecimalPlaces(String decimalPlaces) {
 		this.decimalPlaces = decimalPlaces;
 	}
-	
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Currency currency = (Currency) o;
+		return Objects.equals(id, currency.id) && Objects.equals(code, currency.code) && Objects.equals(description, currency.description) && Objects.equals(enable, currency.enable) && Objects.equals(decimalPlaces, currency.decimalPlaces);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, code, description, enable, decimalPlaces);
+	}
 }

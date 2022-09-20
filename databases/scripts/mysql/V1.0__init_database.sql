@@ -37,3 +37,4 @@ CREATE TABLE IF NOT EXISTS city
     state_id bigint NOT NULL REFERENCES state(id)
 );
 
+CREATE SEQUENCE hibernate_sequence START 1 INCREMENT 1;

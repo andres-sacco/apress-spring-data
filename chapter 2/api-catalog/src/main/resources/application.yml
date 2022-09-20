@@ -3,9 +3,9 @@ management:
     web:
       base-path: /
       exposure:
-        include: "*"
+        include: "*" # Indicate that all the endpoints are expose it.
 
 server:
-  port: 8080
+  port: 8080 # Indicate the default port of the application
   servlet:
-    context-path: /api/catalog
+    context-path: /api/catalog # Indicate the default url

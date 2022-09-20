@@ -6,9 +6,9 @@ import java.util.Optional;
 
 import com.apress.pattern.model.City;
 
-public class CityDao implements ICommonDao<City> {
+public class CityDao implements CommonDao<City> {
 
-	private List<City> cities = new ArrayList<City>();
+	private List<City> cities = new ArrayList<>();
 	
     public CityDao() {
     	cities.add(new City("BUE", "Buenos Aires"));

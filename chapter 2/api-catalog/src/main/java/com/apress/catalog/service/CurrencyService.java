@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.apress.catalog.dto.CurrencyDTO;
 
 @Service
-public class CurrrencyService {
+public class CurrencyService {
 
 	public CurrencyDTO getById(Long id) {
 		return new CurrencyDTO(id, "USD", "Dollar", true, 2);

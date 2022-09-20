@@ -1,26 +1,22 @@
 package com.apress.catalog.service;
 
-import java.util.Optional;
-
+import com.apress.catalog.dto.CurrencyDTO;
+import com.apress.catalog.mapper.ApiMapper;
+import com.apress.catalog.model.Currency;
+import com.apress.catalog.repository.CurrencyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.apress.catalog.dto.CurrencyDTO;
-import com.apress.catalog.model.Currency;
-import com.apress.catalog.repository.CurrencyRepository;
-
-import ma.glasnost.orika.MapperFacade;
+import java.util.Optional;
 
 @Service
-public class CurrrencyService {
+public class CurrencyService {
 
 	CurrencyRepository repository;
-	MapperFacade mapper;
 	
 	@Autowired
-	public CurrrencyService(CurrencyRepository repository, MapperFacade mapper) {
+	public CurrencyService(CurrencyRepository repository) {
 		this.repository = repository;
-		this.mapper = mapper;
 	}
 	
 	public CurrencyDTO getById(Long id) {
@@ -28,7 +24,7 @@ public class CurrrencyService {
 		Optional<Currency> currency = repository.findById(id);
 		
 		if(currency.isPresent()) {
-			response = mapper.map(currency.get(), CurrencyDTO.class);
+			response = ApiMapper.INSTANCE.entityToDTO(currency.get());
 		}
 		
 		return response;

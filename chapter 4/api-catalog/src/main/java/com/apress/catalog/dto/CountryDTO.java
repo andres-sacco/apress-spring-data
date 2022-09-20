@@ -1,9 +1,10 @@
 package com.apress.catalog.dto;
 
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CountryDTO {
+public class CountryDTO implements Serializable {
 	private Long id;
 	private String code;
 	private String name;

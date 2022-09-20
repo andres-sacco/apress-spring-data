@@ -28,12 +28,15 @@ public class FF4jWebConsoleConfiguration extends SpringBootServletInitializer im
         ff4jConsoleServlet.setFf4j(ff4j);
         return ff4jConsoleServlet;
     }
+
+    //Define the url to access into the console
     @Bean
     @SuppressWarnings({"rawtypes","unchecked"})
     public ServletRegistrationBean ff4jDispatcherServletRegistrationBean(FF4jDispatcherServlet ff4jDispatcherServlet) {
         return new ServletRegistrationBean(ff4jDispatcherServlet, "/ff4j-web-console/*");
     }
 
+    //Enable the possible to access for any domain
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**");

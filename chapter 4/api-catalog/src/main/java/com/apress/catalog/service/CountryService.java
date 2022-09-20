@@ -1,15 +1,15 @@
 package com.apress.catalog.service;
 
 import com.apress.catalog.dto.CountryDTO;
+import com.apress.catalog.mapper.ApiMapper;
 import com.apress.catalog.model.Country;
 import com.apress.catalog.repository.CountryRepository;
-import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validator;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import java.util.Optional;
 import java.util.Set;
 
@@ -17,13 +17,11 @@ import java.util.Set;
 public class CountryService {
 
 	CountryRepository repository;
-	MapperFacade mapper;
 	Validator validator;
 
 	@Autowired
-	public CountryService(CountryRepository repository, MapperFacade mapper, Validator validator) {
+	public CountryService(CountryRepository repository,  Validator validator) {
 		this.repository = repository;
-		this.mapper = mapper;
 		this.validator = validator;
 	}
 	
@@ -32,7 +30,7 @@ public class CountryService {
 		Optional<Country> country = repository.findById(id);
 		
 		if(country.isPresent()) {
-			response = mapper.map(country.get(), CountryDTO.class);
+			response = ApiMapper.INSTANCE.entityToDTO(country.get());
 		}
 		
 		return response;
@@ -47,7 +45,6 @@ public class CountryService {
 	}
 
 	public void delete(Long id) {
-		CountryDTO response = null;
 		Optional<Country> country = repository.findById(id);
 
 		if(country.isPresent()) {
@@ -57,7 +54,7 @@ public class CountryService {
 	}
 
 	private CountryDTO saveInformation(CountryDTO country) {
-		Country entity = mapper.map(country, Country.class);
+		Country entity = ApiMapper.INSTANCE.DTOToEntity(country);
 		Country savedEntity = repository.save(entity);
 
 		Set<ConstraintViolation<Country>> violations = validator.validate(entity);
@@ -65,6 +62,6 @@ public class CountryService {
 			throw new ConstraintViolationException(violations);
 		}
 
-		return mapper.map(savedEntity, CountryDTO.class);
+		return ApiMapper.INSTANCE.entityToDTO(savedEntity);
 	}
 }

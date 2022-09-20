@@ -1,6 +1,8 @@
 package com.apress.catalog.dto;
 
-public class CurrencyDTO {
+import java.io.Serializable;
+
+public class CurrencyDTO implements Serializable {
     private Long id;
     private String code;
     private String description;

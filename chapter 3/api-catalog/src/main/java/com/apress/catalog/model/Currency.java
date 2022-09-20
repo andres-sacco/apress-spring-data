@@ -1,15 +1,18 @@
 package com.apress.catalog.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
-@Table(name = "currency") //Optional only if you need to indicate the name
-public class Currency {
+@Table(name = "currency") //Optional only if you need to indicate the table's name
+public class Currency implements Serializable {
 	
 	@Id //Identify which is the primary key
 	@GeneratedValue(strategy = GenerationType.SEQUENCE) //Indicate the way to generate the ID
@@ -19,7 +22,7 @@ public class Currency {
 	private String description;
 	private Boolean enabled;
 	
-	@Column(name = "decimal_places") //Optional: Indicate the name and the lenght of the column 
+	@Column(name = "decimal_places") //Optional: Indicate the name and the length of the column
 	private int decimalPlaces;
 	
 	public Currency() {}
@@ -71,5 +74,17 @@ public class Currency {
 	public void setDecimalPlaces(int decimalPlaces) {
 		this.decimalPlaces = decimalPlaces;
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Currency currency = (Currency) o;
+		return decimalPlaces == currency.decimalPlaces && Objects.equals(id, currency.id) && Objects.equals(code, currency.code) && Objects.equals(description, currency.description) && Objects.equals(enabled, currency.enabled);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, code, description, enabled, decimalPlaces);
+	}
 }
