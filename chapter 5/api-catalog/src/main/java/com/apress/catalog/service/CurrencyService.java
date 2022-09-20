@@ -1,30 +1,27 @@
 package com.apress.catalog.service;
 
 import com.apress.catalog.dto.CurrencyDTO;
+import com.apress.catalog.mapper.ApiMapper;
 import com.apress.catalog.model.Currency;
 import com.apress.catalog.repository.CurrencyRepository;
-import ma.glasnost.orika.MapperFacade;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validator;
 import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class CurrrencyService {
+public class CurrencyService {
 
 	CurrencyRepository repository;
-	MapperFacade mapper;
 	Validator validator;
 	
 	@Autowired
-	public CurrrencyService(CurrencyRepository repository, MapperFacade mapper, Validator validator) {
+	public CurrencyService(CurrencyRepository repository, Validator validator) {
 		this.repository = repository;
-		this.mapper = mapper;
 		this.validator = validator;
 	}
 	
@@ -33,7 +30,7 @@ public class CurrrencyService {
 		Optional<Currency> currency = repository.findById(id);
 		
 		if(currency.isPresent()) {
-			response = mapper.map(currency.get(), CurrencyDTO.class);
+			response = ApiMapper.INSTANCE.entityToDTO(currency.get());
 		}
 		
 		return response;
@@ -43,13 +40,11 @@ public class CurrrencyService {
 		return saveInformation(currency);
 	}
 
-	@Transactional
 	public CurrencyDTO update(CurrencyDTO currency) {
 		return saveInformation(currency);
 	}
 
 	public void delete(Long id) {
-		CurrencyDTO response = null;
 		Optional<Currency> currency = repository.findById(id);
 
 		if(currency.isPresent()) {
@@ -59,7 +54,7 @@ public class CurrrencyService {
 	}
 
 	private CurrencyDTO saveInformation(CurrencyDTO currency) {
-		Currency entity = mapper.map(currency, Currency.class);
+		Currency entity = ApiMapper.INSTANCE.DTOToEntity(currency);
 
 		Set<ConstraintViolation<Currency>> violations = validator.validate(entity);
 		if(!violations.isEmpty()) {
@@ -68,6 +63,6 @@ public class CurrrencyService {
 
 		Currency savedEntity = repository.save(entity);
 
-		return mapper.map(savedEntity, CurrencyDTO.class);
+		return ApiMapper.INSTANCE.entityToDTO(savedEntity);
 	}
 }

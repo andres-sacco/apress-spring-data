@@ -1,10 +1,13 @@
 package com.apress.catalog.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @MappedSuperclass
-public abstract class Base {
+public abstract class Base implements Serializable {
 
     @Id //Identify which is the primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Indicate the way to generate the ID
@@ -12,9 +15,6 @@ public abstract class Base {
 
     @Embedded
     private Audit audit;
-
-    @Version
-    private Long version;
 
     public Base(){}
 
@@ -38,14 +38,6 @@ public abstract class Base {
         this.audit = audit;
     }
 
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
-
     @PrePersist
     public void fillCreatedOn() {
         audit.setCreatedOn(LocalDateTime.now());
@@ -54,5 +46,18 @@ public abstract class Base {
     @PreUpdate
     public void fillUpdatedOn() {
         audit.setUpdatedOn(LocalDateTime.now());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Base base = (Base) o;
+        return Objects.equals(id, base.id) && Objects.equals(audit, base.audit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, audit);
     }
 }

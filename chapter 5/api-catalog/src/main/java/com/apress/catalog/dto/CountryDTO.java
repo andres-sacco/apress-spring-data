@@ -1,9 +1,10 @@
 package com.apress.catalog.dto;
 
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CountryDTO {
+public class CountryDTO implements Serializable {
 	private Long id;
 	private String code;
 	private String name;
@@ -14,8 +15,6 @@ public class CountryDTO {
 	private CurrencyDTO currency;
 
 	private List<StateDTO> states;
-
-	private Long version;
 
 	public CountryDTO() {}
 
@@ -91,13 +90,5 @@ public class CountryDTO {
 
 	public void setStates(List<StateDTO> states) {
 		this.states = states;
-	}
-
-	public Long getVersion() {
-		return version;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
 	}
 }
