@@ -5,6 +5,7 @@ import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @RedisHash("country")
 public class Country implements Serializable {
@@ -97,5 +98,18 @@ public class Country implements Serializable {
 
 	public void setStates(List<State> states) {
 		this.states = states;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Country country = (Country) o;
+		return Objects.equals(id, country.id) && Objects.equals(code, country.code) && Objects.equals(name, country.name) && Objects.equals(locale, country.locale) && Objects.equals(timezone, country.timezone) && Objects.equals(enabled, country.enabled) && Objects.equals(currency, country.currency) && Objects.equals(states, country.states);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, code, name, locale, timezone, enabled, currency, states);
 	}
 }

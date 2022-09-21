@@ -3,8 +3,11 @@ package com.apress.catalog.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 @RedisHash("state")
-public class State {
+public class State implements Serializable {
 
 	@Id
 	private Long id;
@@ -65,5 +68,18 @@ public class State {
 
 	public void setCountry(Country country) {
 		this.country = country;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		State state = (State) o;
+		return Objects.equals(id, state.id) && Objects.equals(code, state.code) && Objects.equals(name, state.name) && Objects.equals(enabled, state.enabled) && Objects.equals(country, state.country);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, code, name, enabled, country);
 	}
 }

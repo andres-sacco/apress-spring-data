@@ -32,6 +32,7 @@ public class RedisConfiguration {
     }
 
 
+    // On this bean you define the connection with the master nodes and the slaves or replicas where you can have more than one
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
         LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()

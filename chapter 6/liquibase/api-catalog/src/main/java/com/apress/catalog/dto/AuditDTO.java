@@ -1,8 +1,9 @@
 package com.apress.catalog.dto;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class AuditDTO {
+public class AuditDTO implements Serializable {
 
     private LocalDateTime createdOn;
 

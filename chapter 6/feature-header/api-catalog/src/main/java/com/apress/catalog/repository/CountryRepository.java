@@ -1,7 +1,6 @@
 package com.apress.catalog.repository;
 
 import com.apress.catalog.model.Country;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -10,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Profile("production")
 public interface CountryRepository extends CrudRepository<Country, Long> {
 	List<Country> findByCode(String code);
 

@@ -1,6 +1,8 @@
 package com.apress.catalog.dto;
 
-public class CurrencyDTO {
+import java.io.Serializable;
+
+public class CurrencyDTO implements Serializable {
     private Long id;
     private String code;
     private String description;
@@ -10,8 +12,6 @@ public class CurrencyDTO {
     private String symbol;
 
     private AuditDTO audit;
-
-    private Long version;
 
 	public CurrencyDTO() {}
     
@@ -77,13 +77,5 @@ public class CurrencyDTO {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
     }
 }

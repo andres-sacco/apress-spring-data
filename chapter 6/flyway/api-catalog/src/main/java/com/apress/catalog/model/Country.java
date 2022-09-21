@@ -1,11 +1,25 @@
 package com.apress.catalog.model;
 
-import javax.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
+import jakarta.persistence.Table;
+
+import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Entity //This annotation indicates to JPA that it’s something that has a persistent state
 @Table(name= "country") //This annotation is optionally
-public class Country {
+public class Country implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
@@ -103,5 +117,18 @@ public class Country {
 
 	public void setStates(List<State> states) {
 		this.states = states;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Country country = (Country) o;
+		return Objects.equals(id, country.id) && Objects.equals(code, country.code) && Objects.equals(name, country.name) && Objects.equals(locale, country.locale) && Objects.equals(timezone, country.timezone) && Objects.equals(enabled, country.enabled) && Objects.equals(currency, country.currency) && Objects.equals(states, country.states);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, code, name, locale, timezone, enabled, currency, states);
 	}
 }

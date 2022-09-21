@@ -38,6 +38,18 @@ public class CountryController {
     
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
+
+        try {
+
+            //Start the transaction
+
+            //Call the service method
+
+            //Commit the transaction
+        } catch(RuntimeException e) {
+            //Rollback the transaction
+        }
+
         countryService.delete(id);
         return ResponseEntity.ok().build();
     }

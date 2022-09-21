@@ -1,14 +1,17 @@
 package com.apress.catalog.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "currency")
-public class Currency extends Base {
+public class Currency extends Base implements Serializable {
 
 	@NotBlank(message = "Code is mandatory")
 	@Column(name = "code", nullable = false, length = 4)
@@ -79,5 +82,19 @@ public class Currency extends Base {
 
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+		Currency currency = (Currency) o;
+		return decimalPlaces == currency.decimalPlaces && Objects.equals(code, currency.code) && Objects.equals(symbol, currency.symbol) && Objects.equals(description, currency.description) && Objects.equals(enabled, currency.enabled);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), code, symbol, description, enabled, decimalPlaces);
 	}
 }

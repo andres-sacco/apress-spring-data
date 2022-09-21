@@ -1,19 +1,19 @@
 package com.apress.catalog.service;
 
 import com.apress.catalog.dto.CountryDTO;
+import com.apress.catalog.mapper.ApiMapper;
 import com.apress.catalog.model.Country;
 import com.apress.catalog.model.State;
 import com.apress.catalog.repository.CountryRepository;
 import com.apress.catalog.repository.StateRepository;
-import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validator;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -25,15 +25,12 @@ public class CountryService {
 
 	StateRepository stateRepository;
 
-	MapperFacade mapper;
 	Validator validator;
 
 	@Autowired
-	public CountryService(CountryRepository countryRepository, StateRepository stateRepository,
-						  MapperFacade mapper, Validator validator) {
+	public CountryService(CountryRepository countryRepository, StateRepository stateRepository, Validator validator) {
 		this.countryRepository = countryRepository;
 		this.stateRepository = stateRepository;
-		this.mapper = mapper;
 		this.validator = validator;
 	}
 
@@ -43,7 +40,7 @@ public class CountryService {
 		Optional<Country> country = countryRepository.findById(id);
 		
 		if(country.isPresent()) {
-			response = mapper.map(country.get(), CountryDTO.class);
+			response = ApiMapper.INSTANCE.entityToDTO(country.get());
 		}
 		
 		return response;
@@ -59,7 +56,6 @@ public class CountryService {
 
 	@Transactional(isolation = Isolation.DEFAULT)
 	public void delete(Long id) throws InterruptedException {
-		CountryDTO response = null;
 		Optional<Country> country = countryRepository.findById(id);
 		List<State> states = stateRepository.findAllByCountryId(country.get().getId());
 
@@ -77,7 +73,7 @@ public class CountryService {
 	}
 
 	private CountryDTO saveInformation(CountryDTO country) {
-		Country entity = mapper.map(country, Country.class);
+		Country entity = ApiMapper.INSTANCE.DTOToEntity(country);
 		Country savedEntity = countryRepository.save(entity);
 
 		Set<ConstraintViolation<Country>> violations = validator.validate(entity);
@@ -85,17 +81,16 @@ public class CountryService {
 			throw new ConstraintViolationException(violations);
 		}
 
-		return mapper.map(savedEntity, CountryDTO.class);
+		return ApiMapper.INSTANCE.entityToDTO(savedEntity);
 	}
 
 /*	private final TransactionTemplate transactionTemplate;
 
 	@Autowired
 	public CountryService(PlatformTransactionManager transactionManager, CountryRepository countryRepository, StateRepository stateRepository,
-						  MapperFacade mapper, Validator validator) {
+						   Validator validator) {
 		this.countryRepository = countryRepository;
 		this.stateRepository = stateRepository;
-		this.mapper = mapper;
 		this.validator = validator;
 		this.transactionTemplate = new TransactionTemplate(transactionManager);
 		transactionTemplate.setReadOnly(false);

@@ -2,9 +2,11 @@ package com.apress.catalog.model;
 
 import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-public abstract class Base {
+public abstract class Base implements Serializable {
 
     @Id
     private Long id;
@@ -49,5 +51,18 @@ public abstract class Base {
 
     public void fillUpdatedOn() {
         audit.setUpdatedOn(LocalDateTime.now());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Base base = (Base) o;
+        return Objects.equals(id, base.id) && Objects.equals(audit, base.audit) && Objects.equals(version, base.version);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, audit, version);
     }
 }

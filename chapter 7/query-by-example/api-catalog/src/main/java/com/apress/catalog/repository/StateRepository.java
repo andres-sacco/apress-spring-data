@@ -11,4 +11,6 @@ public interface StateRepository extends CrudRepository<State, Long> {
 	List<State> findByCode(String code);
 
 	List<State> findAllById(Long id);
+
+	List<State> findAllByCountryId(Long id);
 }
